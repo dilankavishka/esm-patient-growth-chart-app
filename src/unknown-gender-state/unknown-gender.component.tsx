@@ -11,7 +11,7 @@ interface UnknownGenderStateProps {
 
 const UnknownGenderState: React.FC<UnknownGenderStateProps> = ({ onGenderSelected }) => {
   const { t } = useTranslation();
-  const [selectedGender, setSelectedGender] = useState<string | undefined>(undefined);
+  const [selectedGender, setSelectedGender] = useState<string>();
 
   const handleGenderChange = (value: string | number | undefined) => {
     if (value !== undefined) {
@@ -37,12 +37,8 @@ const UnknownGenderState: React.FC<UnknownGenderStateProps> = ({ onGenderSelecte
 
             <div className={styles.radioGroup}>
               <RadioButtonGroup name="gender-selection" valueSelected={selectedGender} onChange={handleGenderChange}>
-                <RadioButton value="male" id="male" labelText={getGenderTranslation('male', getCoreTranslation)} />
-                <RadioButton
-                  value="female"
-                  id="female"
-                  labelText={getGenderTranslation('female', getCoreTranslation)}
-                />
+                <RadioButton value="male" id="male" labelText={getGenderTranslation('male')} />
+                <RadioButton value="female" id="female" labelText={getGenderTranslation('female')} />
               </RadioButtonGroup>
             </div>
           </div>

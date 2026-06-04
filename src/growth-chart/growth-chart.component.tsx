@@ -64,9 +64,9 @@ const GrowthChart: React.FC<GrowthChartProps> = ({ patientUuid, patient }) => {
       }
     : data;
 
-  const selectedGenderValue = getGenderTranslation(selectedGender, getCoreTranslation);
+  const selectedGenderValue = getGenderTranslation(selectedGender);
 
-  const patientGenderValue = getGenderTranslation(patient?.gender, getCoreTranslation);
+  const patientGenderValue = getGenderTranslation(patient?.gender);
 
   return (
     <Theme theme="white">

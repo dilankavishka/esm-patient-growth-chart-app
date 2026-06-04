@@ -1,5 +1,6 @@
 import type { TFunction } from 'i18next';
 import { ScaleTypes, ToolbarControlTypes } from '@carbon/charts/interfaces';
+import { getCoreTranslation } from '@openmrs/esm-framework';
 import boysWeightData from '../who-data/boys/weight-for-age.json';
 import girlsWeightData from '../who-data/girls/weight-for-age.json';
 
@@ -107,10 +108,7 @@ export const getChartOptions = (t: TFunction) => {
   };
 };
 
-export const getGenderTranslation = (
-  gender: string | null | undefined,
-  getCoreTranslation: (key: 'male' | 'female' | 'other' | 'unknown', defaultValue: string) => string,
-) => {
+export const getGenderTranslation = (gender: string | null | undefined) => {
   switch (gender?.toLowerCase()) {
     case 'male':
       return getCoreTranslation('male', 'Male');
