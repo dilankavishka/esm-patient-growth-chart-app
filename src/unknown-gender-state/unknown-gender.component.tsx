@@ -2,26 +2,23 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tile, RadioButtonGroup, RadioButton, Layer } from '@carbon/react';
 import { getCoreTranslation } from '@openmrs/esm-framework';
+import { getGenderTranslation } from '../growth-chart/growth-chart.utils';
 import styles from './unknown-gender.scss';
 
 interface UnknownGenderStateProps {
   onGenderSelected: (gender: string) => void;
-  patientUuid: string;
 }
 
-const UnknownGenderState: React.FC<UnknownGenderStateProps> = ({ onGenderSelected, patientUuid }) => {
+const UnknownGenderState: React.FC<UnknownGenderStateProps> = ({ onGenderSelected }) => {
   const { t } = useTranslation();
-  const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const [selectedGender, setSelectedGender] = useState<string | undefined>(undefined);
 
-  const handleGenderChange = (value: string | number) => {
-    const genderStr = value.toString();
-    setSelectedGender(genderStr);
-    onGenderSelected(genderStr);
-  };
-
-  const genderLabels = {
-    male: getCoreTranslation('male', 'Male'),
-    female: getCoreTranslation('female', 'Female'),
+  const handleGenderChange = (value: string | number | undefined) => {
+    if (value !== undefined) {
+      const genderStr = value.toString();
+      setSelectedGender(genderStr);
+      onGenderSelected(genderStr);
+    }
   };
 
   return (
@@ -40,8 +37,12 @@ const UnknownGenderState: React.FC<UnknownGenderStateProps> = ({ onGenderSelecte
 
             <div className={styles.radioGroup}>
               <RadioButtonGroup name="gender-selection" valueSelected={selectedGender} onChange={handleGenderChange}>
-                <RadioButton value="male" id="male" labelText={genderLabels.male} />
-                <RadioButton value="female" id="female" labelText={genderLabels.female} />
+                <RadioButton value="male" id="male" labelText={getGenderTranslation('male', getCoreTranslation)} />
+                <RadioButton
+                  value="female"
+                  id="female"
+                  labelText={getGenderTranslation('female', getCoreTranslation)}
+                />
               </RadioButtonGroup>
             </div>
           </div>

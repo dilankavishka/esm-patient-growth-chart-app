@@ -6,6 +6,7 @@ import { EmptyCard, CardHeader, navigate, getCoreTranslation } from '@openmrs/es
 import GrowthChartVisualization from './growth-chart-visualization.component';
 import UnknownGenderState from '../unknown-gender-state/unknown-gender.component';
 import { useGrowthChartData } from './growth-chart.resource';
+import { getGenderTranslation } from './growth-chart.utils';
 import styles from './growth-chart-main.scss';
 
 interface GrowthChartProps {
@@ -63,17 +64,9 @@ const GrowthChart: React.FC<GrowthChartProps> = ({ patientUuid, patient }) => {
       }
     : data;
 
-  const genderTranslations = {
-    male: getCoreTranslation('male', 'Male'),
-    female: getCoreTranslation('female', 'Female'),
-    other: getCoreTranslation('other', 'Other'),
-    unknown: getCoreTranslation('unknown', 'Unknown'),
-  };
+  const selectedGenderValue = getGenderTranslation(selectedGender, getCoreTranslation);
 
-  const selectedGenderValue = selectedGender === 'male' ? genderTranslations.male : genderTranslations.female;
-
-  const patientGenderValue =
-    patient?.gender?.toLowerCase() === 'other' ? genderTranslations.other : genderTranslations.unknown;
+  const patientGenderValue = getGenderTranslation(patient?.gender, getCoreTranslation);
 
   return (
     <Theme theme="white">
@@ -107,7 +100,7 @@ const GrowthChart: React.FC<GrowthChartProps> = ({ patientUuid, patient }) => {
         )}
 
         {!isSupportedGender ? (
-          <UnknownGenderState onGenderSelected={handleGenderSelected} patientUuid={patientUuid} />
+          <UnknownGenderState onGenderSelected={handleGenderSelected} />
         ) : (
           <div className={styles.visualizationContainer}>
             <GrowthChartVisualization data={chartDataToRender} />
